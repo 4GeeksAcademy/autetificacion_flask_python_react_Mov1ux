@@ -21,7 +21,7 @@ export const Login = () => {
 
             const data = await resp.json();
             localStorage.setItem("jwt-token", data.token);
-            navigate("/privatemenu");
+            navigate("/perfilmenu");
         } catch (error) {
             console.error(error);
             setError("Contraseña incorrecta"); 
