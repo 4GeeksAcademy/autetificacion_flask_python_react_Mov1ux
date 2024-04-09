@@ -7,55 +7,48 @@ export const Register = () => {
     const navigate = useNavigate(); 
 
     const sendForm = async (email, password) => {
-        try {
-            const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
+      console.log(email, password)
+      const resp = await fetch(process.env.BACKEND_URL + "/api/signup", { 
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ "email": email, "password": password })
+      });
+      console.log(resp);
+      if (!resp.ok) throw Error("There was a problem in the signup request");
 
-            if (!resp.ok) {
-                throw new Error("Hubo un problema en la solicitud de registro");
-            }
+      const data = await resp.json();
+      navigate("/login");
+      return data;
+  };
 
-            navigate("/login"); 
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    return (
+  return (
+    <div className="auth-container">
         <div className="container form-body">
-          <h1 className="title">Register</h1>
-          <div className="input-group">
-            <p>E-mail</p>
-            <input
-              type="text"
-              className="email"
-              placeholder="Enter e-mail"
-              aria-label="Enter e-mail"
-              aria-describedby="basic-addon1"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <p>Password</p>
-            <input
-              type="text"
-              className="password"
-              placeholder="Enter password"
-              aria-label="Enter password"
-              aria-describedby="basic-addon1"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <Link to="/login">
-            <button type="button" className="btn btn-primary" onClick={sendForm}>
+            <h1 className="title">Register</h1>
+            <div className="input-group">
+                <label htmlFor="email">E-mail</label>
+                <input
+                    type="text"
+                    id="email"
+                    className="email"
+                    placeholder="Enter e-mail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    className="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+            <button type="button" className="btn btn-primary" onClick={() => sendForm(email, password)}>
                 Send
             </button>
-          </Link>
         </div>
-    );
-}
+    </div>
+);
+};
