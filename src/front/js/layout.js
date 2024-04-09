@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
+import { Register } from "./component/Register";
+import { PerfilMenu } from "./component/PerfilMenu";
+import { Login } from "./component/Login";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -25,6 +28,9 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<Register/>} path="/register"/>
+                        <Route element={<PerfilMenu/>} path="/perfilmenu"/>
+                        <Route element={<Login/>} path="/login"/>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
